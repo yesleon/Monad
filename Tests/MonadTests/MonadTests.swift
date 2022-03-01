@@ -14,7 +14,7 @@ prefix operator «
 postfix operator »
 
 public postfix func » <T>(lhs: T) -> Monad<T> {
-    return Monad(wrapped: lhs)
+    return Monad(lhs)
 }
 public prefix func « <T>(rhs: Monad<T>) -> T {
     return rhs.wrapped

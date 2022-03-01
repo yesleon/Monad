@@ -9,12 +9,12 @@ public struct Monad<Wrapped> {
     @available(iOS 13.0.0, *)
     public func map<NewWrapped>(_ transform: (Wrapped) async throws -> NewWrapped) async rethrows -> Monad<NewWrapped> {
         let newWrapped = try await transform(wrapped)
-        return Monad<NewWrapped>(wrapped: newWrapped)
+        return Monad<NewWrapped>(newWrapped)
     }
     @available(iOS 13.0.0, *)
     public func compactMap<NewWrapped>(_ transform: (Wrapped) async throws -> NewWrapped?) async throws -> Monad<NewWrapped> {
         if let newWrapped = try await transform(wrapped) {
-            return Monad<NewWrapped>(wrapped: newWrapped)
+            return Monad<NewWrapped>(newWrapped)
         } else {
             throw Failure.foundNil
         }
@@ -25,11 +25,11 @@ public struct Monad<Wrapped> {
     }
     public func map<NewWrapped>(_ transform: (Wrapped) throws -> NewWrapped) rethrows -> Monad<NewWrapped> {
         let newWrapped = try transform(wrapped)
-        return Monad<NewWrapped>(wrapped: newWrapped)
+        return Monad<NewWrapped>(newWrapped)
     }
     public func compactMap<NewWrapped>(_ transform: (Wrapped) throws -> NewWrapped?) throws -> Monad<NewWrapped> {
         if let newWrapped = try transform(wrapped) {
-            return Monad<NewWrapped>(wrapped: newWrapped)
+            return Monad<NewWrapped>(newWrapped)
         } else {
             throw Failure.foundNil
         }
