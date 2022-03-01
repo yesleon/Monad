@@ -3,6 +3,9 @@ public struct Monad<Wrapped> {
         case foundNil
     }
     public let wrapped: Wrapped
+    public init(_ wrapped: Wrapped) {
+        self.wrapped = wrapped
+    }
     @available(iOS 13.0.0, *)
     public func map<NewWrapped>(_ transform: (Wrapped) async throws -> NewWrapped) async rethrows -> Monad<NewWrapped> {
         let newWrapped = try await transform(wrapped)
