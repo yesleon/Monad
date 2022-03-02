@@ -1,21 +1,23 @@
+//
+//  MonadTests.swift
+//
+//
+//  Created by Li-Heng Hsu on 2022/3/2.
+//
+
 import XCTest
 @testable import Monad
 
+
 final class MonadTests: XCTestCase {
-    func testExample() {
-        XCTAssertTrue(«1».map { $0 + 1 } == 1 + 1)
+    func testMap() {
+        XCTAssertEqual(«1».map { $0 + 1 }, 1 + 1)
     }
-    func testThrowingFoundNil() throws {
-        XCTAssertThrowsError(try «1».compactMap { _ in Optional<String>("") })
+    func testCompactMap() throws {
+        XCTAssertThrowsError(try «1».compactMap { _ in Optional<String>.none })
+        XCTAssertNoThrow(try «1».compactMap { _ in Optional<String>("") })
     }
-}
-
-prefix operator «
-postfix operator »
-
-public postfix func » <T>(lhs: T) -> Monad<T> {
-    return Monad(lhs)
-}
-public prefix func « <T>(rhs: Monad<T>) -> T {
-    return rhs.wrapped
+    func testFlatMap() {
+        XCTAssertEqual(«1».flatMap { Monad("\($0)") }, "1")
+    }
 }
