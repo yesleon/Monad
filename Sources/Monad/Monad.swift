@@ -1,3 +1,10 @@
+//
+//  Monad.swift
+//
+//
+//  Created by Li-Heng Hsu on 2022/3/2.
+//
+
 public struct Monad<Wrapped> {
     public enum Failure: Error {
         case foundNil
